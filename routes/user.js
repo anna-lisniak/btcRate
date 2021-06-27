@@ -29,20 +29,22 @@ router.post('/create', (req, res, next) => {
       { expiresIn: 60 * 60 }
     );
 
+    res.cookie("btcToken", token, { httpOnly: true });
+
     res.status(200).json({ token });
   });
 });
 
 router.post("/login", (req, res, next) => {
   const { body: { email, password } } = req;
-  
+
   const user = findUser(email);
-  if(!user) {
+  if (!user) {
     res.status(404).send("User with this email is not found");
     return;
   }
-  
-  if(user !== password) {
+
+  if (user !== password) {
     res.status(400).send("Invalid password")
     return;
   }
@@ -53,7 +55,9 @@ router.post("/login", (req, res, next) => {
     { expiresIn: 60 * 60 }
   );
 
-  res.status(200).json({ token});
+  res.cookie("btcToken", token, { httpOnly: true });
+
+  res.status(200).json({ token });
 
 })
 
