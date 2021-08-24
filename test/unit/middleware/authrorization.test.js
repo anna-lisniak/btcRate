@@ -1,5 +1,4 @@
-let getPassword = require("../../../services/user/getPassword");
-const AuthorizationMiddleware = require("../../../middleware/verifyAccess");
+const AuthorizationMiddleware = require("../../../middleware/authorization.middleware");
 
 describe('Authrorization middleware', () => {
     let mockRequest = {};
