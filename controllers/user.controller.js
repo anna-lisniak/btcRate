@@ -1,7 +1,26 @@
-class createUser {
+class UserController {
     constructor(userService, tokenService) {
         this.userService = userService;
         this.tokenService = tokenService;
+    }
+    login = (req, res) => {
+        const { body: { email, password } } = req;
+        const userPassword = this.userService.getPassword(email);
+
+        if (!userPassword) {
+            res.status(404).send("User with this email is not found");
+            return;
+        }
+
+        if (userPassword !== password) {
+            res.status(400).send("Invalid password")
+            return;
+        }
+
+        const token = this.tokenService.create({ email, password })
+
+        res.cookie("btcToken", token, { httpOnly: true });
+        res.status(200).json({ token });
     }
     create = async (req, res) => {
         const { body: { email, password } } = req;
@@ -27,4 +46,4 @@ class createUser {
     }
 }
 
-module.exports = createUser;
+module.exports = UserController;

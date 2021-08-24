@@ -1,19 +1,18 @@
 const express = require('express');
 const GLOBAL_CONSTANTS = require('../constants');
+const UserController = require('../controllers/user.controller');
 const router = express.Router();
-const createUserController = require('../controllers/user/create.controller');
-const login = require('../controllers/user/login');
 const DataBase = require('../services/db');
 const JwtService = require('../services/jwt.service');
-const UserService = require('../services/user');
+const UserService = require('../services/user.service');
 
-const createUser = new createUserController(
+const userController = new UserController(
     new UserService(new DataBase(GLOBAL_CONSTANTS.DB_FILE_NAME)),
     new JwtService()
 );
 
-router.post('/create', createUser.create);
+router.post('/create', userController.create);
 
-router.post("/login", login)
+router.post("/login", userController.login)
 
 module.exports = router;
