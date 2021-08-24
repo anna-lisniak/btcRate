@@ -1,9 +1,9 @@
-const fetchBtcRate = require("../services/btcRate");
+const BtcRate = require("../services/btcRate");
 const GLOBAL_CONSTANTS = require('../constants');
 
 const getBtcRate = async (_, res) => {
-    const { bpi } = await fetchBtcRate();
-    const btcRate = bpi[GLOBAL_CONSTANTS.CURRENCY];
+    const btc = new BtcRate(GLOBAL_CONSTANTS.BTC_RATE_API);
+    const btcRate = await btc.get(GLOBAL_CONSTANTS.CURRENCY);
 
     res.status(200).json({ btcRate })
 }
