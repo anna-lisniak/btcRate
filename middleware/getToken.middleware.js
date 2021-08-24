@@ -1,4 +1,4 @@
-const getToken = (req, res, next) => {//getBearerToken
+const getTokenMiddleware = (req, res, next) => {
     if ("btcToken" in req.cookies) {
         req.token = req.cookies.btcToken;
         return next();
@@ -8,13 +8,13 @@ const getToken = (req, res, next) => {//getBearerToken
     if (!bearerHeader) return res.sendStatus(403);
 
     const [type, bearerToken] = bearerHeader.split(" ");
+  
     if(type !== "Bearer") {
-        res.status(401).send();
+        res.sendStatus(401);
     }
+
     req.token = bearerToken;
     next();
 }
 
-module.exports = {
-    getToken,
-}
+module.exports = getTokenMiddleware;

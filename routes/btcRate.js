@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const getBtcRate = require('../controlers/btcRate');
-const { getToken } = require('../middleware/getToken');
+const getTokenMiddleware = require('../middleware/getToken.middleware');
 const { verifyAccess } = require('../middleware/verifyAccess');
 
-router.get('/', getToken, verifyAccess, getBtcRate);
+router.get('/', getTokenMiddleware, verifyAccess, getBtcRate);
 
 module.exports = router;
