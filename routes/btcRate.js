@@ -1,9 +1,20 @@
 const express = require('express');
+const GLOBAL_CONSTANTS = require('../constants');
 const router = express.Router();
-const getBtcRate = require('../controlers/btcRate');
+const getBtcRate = require('../controllers/btcRate');
 const getTokenMiddleware = require('../middleware/getToken.middleware');
-const { verifyAccess } = require('../middleware/verifyAccess');
+const AuthorizationMiddleware = require('../middleware/verifyAccess');
+const DataBase = require('../services/db');
+const JwtService = require('../services/jwt.service');
+const getUserPassword = require('../services/user/getPassword');
 
-router.get('/', getTokenMiddleware, verifyAccess, getBtcRate);
+const db = new DataBase(GLOBAL_CONSTANTS.DB_FILE_NAME);
+
+const auth = new AuthorizationMiddleware(
+    new JwtService(),
+    (email) => getUserPassword(db, email)
+    )
+
+router.get('/', getTokenMiddleware, auth.verify, getBtcRate);
 
 module.exports = router;

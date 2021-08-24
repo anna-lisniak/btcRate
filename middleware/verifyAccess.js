@@ -1,13 +1,17 @@
-const jwt = require("jsonwebtoken");
-const getPassword = require("../services/user/getPassword");
+class AuthorizationMiddleware {
+    constructor(tokenService, checkIfPasswordExist) {
+        this.tokenService = tokenService;
+        this.checkIfPasswordExist = checkIfPasswordExist;
+    }
 
-const verifyAccess = (req, res, next) => {
-    jwt.verify(req.token, process.env.SECRET, async (err, authData) => {
-        if (err || !getPassword(authData.email)) return res.sendStatus(403);
+    verify = (req, res, next) => {
+        const { error, data: { email } } = this.tokenService.verify(req.token);
+        if (error || !this.checkIfPasswordExist(email)) {
+            return res.sendStatus(403);
+        }
+
         next();
-    });
+    }
 }
 
-module.exports = {
-    verifyAccess
-};
+module.exports = AuthorizationMiddleware;
