@@ -1,5 +1,5 @@
 const DataBase = require('../../../services/db');
-const UserService = require('../../../services/user');
+const UserService = require('../../../services/user.service');
 
 describe('User Service', () => {
     const fileName = 'testPerson.json';

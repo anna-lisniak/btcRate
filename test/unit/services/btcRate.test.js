@@ -27,4 +27,5 @@ describe('btcRate', () => {
             expect(axiosGet).toBeCalledWith(GLOBAL_CONSTANTS.BTC_RATE_API);
             expect(response).toEqual("success");
         })
+    })
 })
