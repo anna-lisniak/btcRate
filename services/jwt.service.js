@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const GLOBAL_CONSTANTS = require("../constants");
 
 class JwtService {
     verify(token) {
@@ -11,6 +12,13 @@ class JwtService {
         });
 
         return { error, data };
+    }
+    create({ email, password }) {
+        return jwt.sign(
+            { email, password },
+            process.env.SECRET,
+            { expiresIn: GLOBAL_CONSTANTS.TOKEN_EXPIRE_TIME }
+        );
     }
 }
 

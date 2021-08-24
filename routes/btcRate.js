@@ -6,13 +6,14 @@ const getTokenMiddleware = require('../middleware/getToken.middleware');
 const AuthorizationMiddleware = require('../middleware/authorization.middleware');
 const DataBase = require('../services/db');
 const JwtService = require('../services/jwt.service');
-const getUserPassword = require('../services/user/getPassword');
+const UserService = require('../services/user');
 
 const db = new DataBase(GLOBAL_CONSTANTS.DB_FILE_NAME);
+const userService = new UserService(db);
 
 const auth = new AuthorizationMiddleware(
     new JwtService(),
-    (email) => getUserPassword(db, email)
+    userService.getPassword
     )
 
 router.get('/', getTokenMiddleware, auth.verify, getBtcRate);
