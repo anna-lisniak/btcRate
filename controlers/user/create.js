@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const savePersonToPublicFolder = require('../../services/user/save');
 const jwt = require('jsonwebtoken');
 const getUserPassword = require('../../services/user/getPassword');
@@ -36,18 +35,3 @@ const createUser = async (req, res, next) => {
 }
 
 module.exports = createUser;
-=======
-const { readUsers } = require("./utils");
-const fs = require("fs");
-
-const savePersonToPublicFolder = ({ email, password }, callback) => {
-    const users = readUsers();
-
-    fs.writeFile('./person.json', JSON.stringify({
-        ...users,
-        [email]: password
-    }), callback);
-}
-
-module.exports = savePersonToPublicFolder;
->>>>>>> 070aeee1702ab40143c03a81444617f4a73706c9

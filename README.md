@@ -42,8 +42,4 @@ Return Data
 
 |          Name | Required |  Type   | Description |
 | -------------:|:--------:|:-------:| ----------------------------------------- |
-<<<<<<< HEAD
 |     `token`| true | string | JWT Token for auth |"# genesis_homework1" 
-=======
-|     `token`| true | string | JWT Token for auth |
->>>>>>> 070aeee1702ab40143c03a81444617f4a73706c9
