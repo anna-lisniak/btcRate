@@ -1,45 +1,32 @@
-# API endpoints
+## Installation
 
-##GET
-`Getting information about btc rate`[/btcRate](#get-btcRate) </br>
+- Go to [Docker](https://www.docker.com/get-started) and download an app
 
-##POST
-`Register new user`[/user/create](#post-usercreate) </br>
-`Login exist user`[/user/login](#post-userlogin) </br>
+- In the terminal run:
+```bash
+docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
 
-### GET /btcRate
+- Go to [Nodejs](https://nodejs.org/en/) and install lattes LTS version
 
-### POST /user/create
-After sending valid user data, you will receive a response with a private token.
-Also, token will save in cookies.
+- Install project dependencies
+```bash
+$ npm install
+```
 
-**Body Data**
+## Running the application
 
-|          Name | Required |  Type   | Description |
-| -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `email` | true | string(email)  | User valid email |
-|      `password`| true | string | User password |
+```bash
+$ npm run start
+```
+- Open http://localhost:8081
 
-**Return Data**
+</br>
 
-|          Name | Required |  Type   | Description |
-| -------------:|:--------:|:-------:| ----------------------------------------- |
-|      `token`| true | string | JWT Token for auth |
+### How it works
 
+Every time when user tries to log in - the event is sent to rabbitmq with type 'debug' and an object with user's email and password.
 
-### POST /user/login
-After sending valid user data, you will receive a response with a private token.
-Also, token will save in cookies.
+When user logged in succsessfully - the event is sent to rabbitmq with type 'info' and object with text information and user token.
 
-**Body Data**
-
-|          Name | Required |  Type   | Description |
-| -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `email` | true | string(email)  | User valid email |
-|      `password`| true | string | User password |
-
-Return Data
-
-|          Name | Required |  Type   | Description |
-| -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `token`| true | string | JWT Token for auth |"# genesis_homework1" 
+When user try to login but user's email doesn't exist or password is invalid - the event is sent to rabbitmq with type 'error' and an object with text information and user's email and password. Also this object will be printed in the stdout. 

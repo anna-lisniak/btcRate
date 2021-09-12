@@ -2,8 +2,6 @@ const express = require('express');
 const btcRateRouter = require('./routes/btcRate.router')
 const app = express();
 
-require('dotenv').config()
-
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 

@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "babel-node server.js",
     "micro": "babel-node",
     "lint": "eslint",
     "test": "jest"
   },
   "dependencies": {
+    "amqplib": "^0.8.0",
     "axios": "^0.21.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",

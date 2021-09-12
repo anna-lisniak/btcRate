@@ -1,11 +1,10 @@
 const express = require('express');
+require('dotenv').config({path: __dirname + '/.env'})
 const usersRouter = require('./routes/user.router');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const app = express();
-
-require('dotenv').config()
 
 app.use(logger('dev'));
 app.use(express.json());

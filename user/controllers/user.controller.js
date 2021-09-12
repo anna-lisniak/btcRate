@@ -1,25 +1,38 @@
 class UserController {
-    constructor(userService, tokenService) {
+    constructor(userService, tokenService, loggerService) {
         this.userService = userService;
         this.tokenService = tokenService;
+        this.loggerService = loggerService;
     }
-    login = (req, res) => {
+    login = async (req, res) => {
         const { body: { email, password } } = req;
+        
         const userPassword = this.userService.getPassword(email);
+        
+        const channel = await this.loggerService.createChannel();
+        
+        this.loggerService.sendMessage(channel, 'debug', {email, password});   
 
         if (!userPassword) {
-            res.status(404).send("User with this email is not found");
+            const text = 'User with this email is not found';
+            res.status(404).send(text);
+            
+            this.loggerService.sendMessage(channel, 'error', {text, email, password});   
             return;
         }
 
         if (userPassword !== password) {
-            res.status(400).send("Invalid password")
+            const text = 'Invalid password';
+            res.status(400).send(text);
+            this.loggerService.sendMessage(channel, 'error', {text, email, password});
             return;
         }
 
         const token = this.tokenService.create({ email, password })
 
         res.cookie("btcToken", token, { httpOnly: true });
+        
+        this.loggerService.sendMessage(channel, 'info', {text: "User is successfully logged in", token});
         res.status(200).json({ token });
     }
     create = async (req, res) => {
