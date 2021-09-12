@@ -28,7 +28,6 @@ class DataBase {
             await fs.writeFile(this.fileName, JSON.stringify(data));
             return null
         } catch(e) {
-            console.log({e});
             return e;
         }
     }

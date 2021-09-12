@@ -13,6 +13,8 @@ const userController = new UserController(
 
 router.post('/create', userController.create);
 
-router.post("/login", userController.login)
+router.post("/login", userController.login);
+
+router.get("/verify", userController.verify);
 
 module.exports = router;

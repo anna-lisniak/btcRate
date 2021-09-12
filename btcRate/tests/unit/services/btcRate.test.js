@@ -1,6 +1,6 @@
 const axios = require('axios');
 const GLOBAL_CONSTANTS = require('../../../constants');
-const BtcRate = require('../../../services/btcRate');
+const BtcRate = require('../../../services/btcRate.service');
 
 describe('btcRate', () => {
     describe('fetchBtcRate', () => {

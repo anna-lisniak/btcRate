@@ -44,6 +44,17 @@ class UserController {
         res.cookie("btcToken", token, { httpOnly: true });
         res.status(200).json({ token });
     }
+    verify = (req, res) => {
+        const { body: { token } } = req;
+        const { error, data } = this.tokenService.verify(token);
+
+        if (error || !data || !this.userService.getPassword(data.email)) {
+            res.json(null);
+            return;
+        }
+
+        res.json(token);
+    }
 }
 
 module.exports = UserController;

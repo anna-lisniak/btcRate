@@ -1,6 +1,6 @@
 const GLOBAL_CONSTANTS = require("../../../constants");
 const BtcRateController = require("../../../controllers/btcRate.controller");
-const BtcRateService = require("../../../services/btcRate");
+const BtcRateService = require("../../../services/btcRate.service");
 
 describe("BtcRate controller", () => {
     const mockRequest = null;
